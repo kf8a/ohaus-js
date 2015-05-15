@@ -14,6 +14,13 @@ module.exports = {
     filename: 'bundle.js',
   },
   module: {
-      noParse: [pathToReact]
+      noParse: [pathToReact],
+      loaders: [{
+        test: /\.jsx$/,
+        loader: 'babel'
+      }, {
+        test: /\.css$/, // Only .css files
+        loader: 'style!css' // Run both loaders
+      }]
   }
 };
