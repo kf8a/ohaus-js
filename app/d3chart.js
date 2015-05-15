@@ -1,6 +1,6 @@
 'use strict';
 
-import d3 from './d3.js';
+import d3 from 'd3';
 
 var d3Chart = {};
 
