@@ -44,13 +44,13 @@ d3Chart.create = function(el, state) {
     .y(function(d, i) { return y(d.value); });
   this.elements.line = line;
 
-  xAxis = d3.svg.axis().scale(x).orient("top");
+  var xAxis = d3.svg.axis().scale(x).orient("top");
 
   svg.append("g")
     .attr("class", "x axis")
     .call(xAxis);
 
-  yAxis = d3.svg.axis().scale(y).orient("left");
+  var yAxis = d3.svg.axis().scale(y).orient("left");
 
   svg.append("g")
   .attr("class", "y axis")
@@ -72,9 +72,6 @@ d3Chart.create = function(el, state) {
       .datum(state.data)
       .attr("class", "line")
       .attr("d", line);
-
-  svg.append("g")
-    .attr("class", "trendlines")
 
   return(this);
 };
@@ -140,41 +137,6 @@ d3Chart.update = function(el, state) {
     .ease("linear")
     .attr("transform", "translate(" + x(tr-1) + ",0)");
   }
-
-  if (state.recording) {
-    var slope = state.slope
-    var intercept = state.intercept
-    var base = state.now
-    var y1 = slope * (min_x - base) + intercept;
-    var y2 = slope * (max_x - base) + intercept;
-    var trendData = [[min_x, y1, max_x, y2]];
-  } else {
-    var trendData = []
-  }
-
-    var trendline = svg.select(".trendlines")
-    .selectAll(".trendline")
-    .data(trendData);
-
-    trendline.enter()
-    .append("line")
-    .attr("class", "trendline")
-    .attr("x1", function(d) { return x(d[0]); })
-    .attr("y1", function(d) { return y(d[1]); })
-    .attr("x2", function(d) { return x(d[2]); })
-    .attr("y2", function(d) { return y(d[3]); })
-    .attr("stroke", "black")
-    .attr("stroke-width", 2);
-
-    trendline.transition()
-    .attr("x1", function(d) { return x(d[0]); })
-    .attr("y1", function(d) { return y(d[1]); })
-    .attr("x2", function(d) { return x(d[2]); })
-    .attr("y2", function(d) { return y(d[3]); })
-    .attr("stroke", "black")
-    .attr("stroke-width", 2);
-
-    trendline.exit().remove();
 };
 
 d3Chart.destroy = function(el) {

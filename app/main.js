@@ -9,7 +9,8 @@ main();
 
 function main() {
   var socketService = new SocketService({
-    path: '/ws'
+    path: '/ws',
+    port: "8081"
   });
 
   React.render(

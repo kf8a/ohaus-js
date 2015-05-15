@@ -23,7 +23,7 @@ var App = React.createClass({
       <Chart 
       now={ this.state.now}
       recording={this.state.recording}
-      data={this.state.co2} />
+      data={this.state.weight} />
       </div>
       <div className="row">
       </div>
