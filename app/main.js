@@ -1,6 +1,19 @@
 'use strict';
-var component = require('./component.js');
 
+import React from "react";
+import Hello from "./component.js";
+import SocketService from "./socket-service.js"
+import App from "./ohaus.jsx"
 
-document.body.appendChild(component());
+main();
 
+function main() {
+  var socketService = new SocketService({
+    path: '/ws'
+  });
+
+  React.render(
+    < App socketService={socketService} />, 
+      document.getElementById('app')
+  )
+}
