@@ -4,7 +4,10 @@ var path = require('path');
 var node_modules = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
-  entry: ['webpack/hot/dev-server', path.resolve(__dirname, 'app/main.js')],
+  entry: [
+    'webpack/hot/dev-server', 
+    path.resolve(__dirname, 'app/main.js')
+  ],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
