@@ -24,8 +24,6 @@ var Chart = React.createClass({
     return {
       data: this.props.data,
       now: this.props.now,
-      slope: this.props.slope,
-      intercept: this.props.intercept,
       recording: this.props.recording
     };
   },

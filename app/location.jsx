@@ -3,7 +3,7 @@
 import React from "react";
 
 var Location = React.createClass({
-  render: function() {
+  renderForm: function() {
     return(
       <div className="location">
       <form className="form">
@@ -15,7 +15,16 @@ var Location = React.createClass({
       </form>
       </div>
     )
-  }
+  },
+
+  render: function() {
+    if (this.props.recording){
+      return this.renderForm();
+    } else {
+      return this.renderForm();
+    }
+  },
+
 })
 
 module.exports = Location;

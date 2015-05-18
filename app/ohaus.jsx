@@ -27,7 +27,9 @@ var App = React.createClass({
       data={this.state.weight} />
       </div>
       <div className="row">
-      <Location />
+      <Location 
+      recording = {this.state.recording}
+      />
       </div>
       </div>
     );
