@@ -45,12 +45,14 @@ d3Chart.create = function(el, state) {
   this.elements.line = line;
 
   var xAxis = d3.svg.axis().scale(x).orient("top");
+  this.elements.xAxis = xAxis;
 
   svg.append("g")
     .attr("class", "x axis")
     .call(xAxis);
 
   var yAxis = d3.svg.axis().scale(y).orient("left");
+  this.elements.yAxis = yAxis;
 
   svg.append("g")
   .attr("class", "y axis")
@@ -79,12 +81,17 @@ d3Chart.create = function(el, state) {
 d3Chart.update = function(el, state) {
 
   var data = state.data;
-  // if (data.length == 0) { return }
+  if (data.length == 0) { return }
 
   var svg = d3.select(el).select('svg');
 
   // Re-compute the elements, and render the data points
   var x = this.elements.x;
+  var y = this.elements.y;
+
+  var xAxis = this.elements.xAxis;
+  var yAxis = this.elements.yAxis;
+
   var min_x = d3.min(data, function(d) {return d.time});
   var max_x = d3.max(data, function(d) {return d.time});
 

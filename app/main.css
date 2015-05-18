@@ -1,0 +1,50 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.Chart {
+  width: 100%;
+  height: 100px;
+  margin: 10px 0;
+}
+
+ul.flux {
+  font: 12pt sans-serif;
+  margin: 10px;
+}
+
+svg {
+  font: 10px sans-serif;
+}
+
+.line {
+  fill: none;
+  stroke: #DDDDDD;
+  stroke-width: 1.5px;
+}
+
+.trendline {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+
+.circle {
+  color: black;
+  fill: black;
+ }
+
+ .axis path,
+ .axis line {
+   fill: none;
+   stroke: #000;
+   shape-rendering: crispEdges;
+}
+
+.location{
+  padding-top: 30px;
+  padding-left:20px;
+}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Chart from './chart.jsx';
+import Location from './location.jsx'
 
 var App = React.createClass({
   getInitialState: function() {
@@ -26,6 +27,7 @@ var App = React.createClass({
       data={this.state.weight} />
       </div>
       <div className="row">
+      <Location />
       </div>
       </div>
     );

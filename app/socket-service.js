@@ -20,7 +20,7 @@ module.exports = function SocketService (config) {
   };
 
   function onMessageReceived (data) {
-    console.log('onMessageReceived, data:', data, 'ws.readyState', ws.readyState);
+    // console.log('onMessageReceived, data:', data, 'ws.readyState', ws.readyState);
     pendingCallbacks.forEach(function (cb) {
       cb.call(null, data);
     });
