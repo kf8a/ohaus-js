@@ -9,6 +9,7 @@ var App = React.createClass({
     return { 
       weight: [],
       recording: false,
+      location: 'T1R1 Rain-free',
       now: new Date()
     };
   },
@@ -20,23 +21,31 @@ var App = React.createClass({
   render: function() {
     return (
       <div className="flux">
-      <div className="row">
-      <Chart 
-      now={ this.state.now}
-      recording={this.state.recording}
-      data={this.state.weight} />
-      </div>
-      <div className="row">
-      <Location 
-      recording = {this.state.recording}
-      />
-      </div>
+        <div className="row">
+        <Chart 
+          now={ this.state.now}
+          recording={this.state.recording}
+          data={this.state.weight} />
+        </div>
+        <div className="row">
+        <Location
+          handleRecord={this.handleRecord}
+          handleSave={this.handleSave}
+          handleCancel={this.handleCancel}
+          handleChange={this.handleChange}
+          value={this.state.location}
+          recording={this.state.recording} />
+        </div>
       </div>
     );
   },
 
   resetData: function() {
     this.setState({weight:[]});
+  },
+
+  handleChange: function(event) {
+    this.setState({location: event.target.value});
   },
 
   handleCancel: function(e) {
@@ -63,6 +72,7 @@ var App = React.createClass({
     e.preventDefault();
     this.resetData();
     this.setState({recording: true,
+                  value: 'something',
                   now: new Date()})
   },
 
@@ -81,7 +91,6 @@ var App = React.createClass({
     var socket = this.props.socketService;
 
     socket.onDataReceived(function (datum) {
-      datum.obs_time = new Date(datum.obs_time);
       datum.time = new Date(datum.time);
 
       this.prepareData(datum);
