@@ -8,7 +8,6 @@ d3Chart.elements = {};
 
 d3Chart.create = function(el, state) {
   var boundingBox = d3.select(el).node().getBoundingClientRect();
-  console.log(boundingBox)
   var height = boundingBox.height
   var width =  boundingBox.width
   var data  =  state.data
@@ -20,7 +19,6 @@ d3Chart.create = function(el, state) {
     .attr("preserveAspectRatio", "xMinYMin meet")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  this.elements.svg = svg;
 
   svg.append("defs").append("clipPath")
     .attr("id", "clip")
@@ -38,11 +36,6 @@ d3Chart.create = function(el, state) {
     .domain([2.2, 4.5])
     .range([height, 0]);
   this.elements.y = y
-
-  var line = d3.svg.line()
-    .x(function(d, i) { return x(d.time); })
-    .y(function(d, i) { return y(d.value); });
-  this.elements.line = line;
 
   var xAxis = d3.svg.axis().scale(x).orient("top");
   this.elements.xAxis = xAxis;
@@ -68,13 +61,6 @@ d3Chart.create = function(el, state) {
     .attr("cx", x(function(d) {return(d.time)}))
     .attr("cy", y(function(d) {return(d.value)}))
 
-    this.elements.path = svg.append("g")
-      .attr("clip-path", "url(#clip)")
-      .append("path")
-      .datum(state.data)
-      .attr("class", "line")
-      .attr("d", line);
-
   return(this);
 };
 
@@ -95,55 +81,35 @@ d3Chart.update = function(el, state) {
   var min_x = d3.min(data, function(d) {return d.time});
   var max_x = d3.max(data, function(d) {return d.time});
 
-  x.domain([min_x, max_x]);
-  svg.select(".x.axis")
-    .transition().duration(200).call(xAxis);
-
-  var y = this.elements.y;
   var min_y = d3.min(data, function(d) {return d.value});
   var max_y = d3.max(data, function(d) {return d.value});
+
+  x.domain([min_x, max_x]);
+  svg.select(".x.axis").call(xAxis);
+
   y.domain([min_y, max_y]);
-  svg.select(".y.axis")
-    .transition().duration(200).call(yAxis);
+  svg.select(".y.axis").call(yAxis);
 
-  // redraw the line, and slide it to the left
-  var path = svg.select("path.line"); 
-  var line = this.elements.line;
+  var circles = svg.select(".circles")
+    .selectAll("circle")
+    .data(data);
 
-  var tr = d3.min(data, function(d) {return d.time});
+  circles
+    .enter()
+    .append("circle")
+    // .attr("r", 2)
+    // .attr("cx", function(d) { return x(d.time)})
+    // .attr("cy", function(d) { return y(d.value)})
 
-  svg.select(".circles").selectAll("circle")
-    .data(data)
-    .transition()
-    .duration(0)
+  circles
     .attr("r",2)
     .attr("cx", function(d) {return x(d.time)})
     .attr("cy", function(d) { return y(d.value)})
 
-  svg.select(".circles").selectAll("circle")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("r", 2)
-    .attr("cx", function(d) { return x(d.time)})
-    .attr("cy", function(d) { return y(d.value)})
-
-  svg.select(".circles").selectAll("circle")
-    .data(data)
+  circles
     .exit()
     .remove()
 
-  if (data.length == 0 ) {
-    path.datum(data)
-  } else {
-    path
-    .attr("d", line)
-    .attr("transform", null)
-    .transition()
-    .duration(0)
-    .ease("linear")
-    .attr("transform", "translate(" + x(tr-1) + ",0)");
-  }
 };
 
 d3Chart.destroy = function(el) {

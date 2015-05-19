@@ -1,6 +1,7 @@
 'use strict';
 
 import React from "react";
+import jQuery from "jquery";
 import Chart from './chart.jsx';
 import Location from './location.jsx'
 
@@ -71,6 +72,10 @@ var App = React.createClass({
   handleRecord: function(e) {
     e.preventDefault();
     this.resetData();
+    jQuery.ajax({
+      type: "POST",
+      url: "/record"
+    })
     this.setState({recording: true,
                   value: 'something',
                   now: new Date()})
@@ -79,7 +84,7 @@ var App = React.createClass({
   prepareData: function(datum) {
     this.state.weight.push({time: datum.time, value: datum.weight})
 
-    if (this.state.weight.length > 200) {
+    if (!this.state.recording && this.state.weight.length > 200) {
       this.state.weight.shift();
     };
 
