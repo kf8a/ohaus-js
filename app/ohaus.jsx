@@ -62,7 +62,8 @@ var App = React.createClass({
     // send data back to server
     jQuery.ajax({
       type: "POST",
-      url: "http://localhost:"+ this.state.port+"/stop",
+      // url: "http://localhost:"+ this.state.port+"/stop",
+      url: "/stop",
       data: JSON.stringify({"weight": this.state.weight}),
       dataType: 'json'
     });
@@ -77,10 +78,10 @@ var App = React.createClass({
     jQuery.ajax({
       type: "POST",
       data: JSON.stringify({"location": this.state.location}),
-      url: "http://localhost:" + this.state.port + "/record"
+      // url: "http://localhost:" + this.state.port + "/record"
+      url: "/record"
     })
     this.setState({recording: true,
-                  value: 'something',
                   now: new Date()})
   },
 
