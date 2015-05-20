@@ -12,7 +12,8 @@ var App = React.createClass({
       recording: false,
       location: '',
       port: 8081,
-      now: new Date()
+      now: new Date(),
+      isSubmitting: true
     };
   },
 
@@ -35,6 +36,7 @@ var App = React.createClass({
           handleStop={this.handleStop}
           handleChange={this.handleChange}
           value={this.state.location}
+          isSubmitting={this.state.isSubmitting}
           recording={this.state.recording} />
         </div>
       </div>
@@ -46,11 +48,15 @@ var App = React.createClass({
   },
 
   handleChange: function(event) {
+    this.setState( {isSubmitting: false})
     this.setState({location: event.target.value});
   },
 
   handleStop: function(e) {
     e.preventDefault();
+    this.setState({ recording: false,
+                  location: null,
+                  isSubmitting: true})
     // send data back to server
     jQuery.ajax({
       type: "POST",
@@ -60,11 +66,11 @@ var App = React.createClass({
     });
 
     this.resetData();
-    this.setState({ recording: false})
   },
 
   handleRecord: function(e) {
     e.preventDefault();
+    this.setState({isSubmitting: true})
     this.resetData();
     jQuery.ajax({
       type: "POST",
