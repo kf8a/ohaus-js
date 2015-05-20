@@ -6,10 +6,10 @@ var Location = React.createClass({
   renderForm: function() {
     return(
       <div className="location">
-      <form className="form">
+      <form className="form" onSubmit={this.props.handleRecord}>
           <label htmlFor="location">Location</label>
-          <input type='text' value={this.props.value} onChange={this.props.handleChange}/>
-        <button type='button' className="btn btn-primary btn-lg" onClick={this.props.handleRecord}>Record</button>
+          <input id='location' placeholder="Sample Location" type='text' value={this.props.value} onChange={this.props.handleChange}/>
+          <input type="submit" value="Record" />
       </form>
       </div>
     )

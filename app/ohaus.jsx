@@ -10,7 +10,7 @@ var App = React.createClass({
     return { 
       weight: [],
       recording: false,
-      location: 'T1R1 Rain-free',
+      location: '',
       port: 8081,
       now: new Date()
     };
@@ -72,9 +72,11 @@ var App = React.createClass({
 
   handleRecord: function(e) {
     e.preventDefault();
+    console.log(this.state.location)
     this.resetData();
     jQuery.ajax({
       type: "POST",
+      data: JSON.stringify({"location": this.state.location}),
       url: "http://localhost:" + this.state.port + "/record"
     })
     this.setState({recording: true,
