@@ -11,6 +11,7 @@ var App = React.createClass({
       weight: [],
       recording: false,
       location: 'T1R1 Rain-free',
+      port: 8081,
       now: new Date()
     };
   },
@@ -60,7 +61,7 @@ var App = React.createClass({
     // send data back to server
     jQuery.ajax({
       type: "POST",
-      url: "/save",
+      url: "http://localhost:"+ this.state.port+"/save",
       data: JSON.stringify({"weight": this.state.weight}),
       dataType: 'json'
     });
@@ -74,7 +75,7 @@ var App = React.createClass({
     this.resetData();
     jQuery.ajax({
       type: "POST",
-      url: "/record"
+      url: "http://localhost:" + this.state.port + "/record"
     })
     this.setState({recording: true,
                   value: 'something',
