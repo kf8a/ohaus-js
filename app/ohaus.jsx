@@ -48,7 +48,9 @@ var App = React.createClass({
   },
 
   handleChange: function(event) {
-    this.setState( {isSubmitting: false})
+    if (event.target.value.length > 3) {
+      this.setState( {isSubmitting: false})
+    }
     this.setState({location: event.target.value});
   },
 
