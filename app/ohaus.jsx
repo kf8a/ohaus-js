@@ -32,8 +32,7 @@ var App = React.createClass({
         <div className="row">
         <Location
           handleRecord={this.handleRecord}
-          handleSave={this.handleSave}
-          handleCancel={this.handleCancel}
+          handleStop={this.handleStop}
           handleChange={this.handleChange}
           value={this.state.location}
           recording={this.state.recording} />
@@ -50,18 +49,12 @@ var App = React.createClass({
     this.setState({location: event.target.value});
   },
 
-  handleCancel: function(e) {
-    e.preventDefault();
-    this.resetData();
-    this.setState({ recording: false});
-  },
-
-  handleSave: function(e) {
+  handleStop: function(e) {
     e.preventDefault();
     // send data back to server
     jQuery.ajax({
       type: "POST",
-      url: "http://localhost:"+ this.state.port+"/save",
+      url: "http://localhost:"+ this.state.port+"/stop",
       data: JSON.stringify({"weight": this.state.weight}),
       dataType: 'json'
     });
@@ -72,7 +65,6 @@ var App = React.createClass({
 
   handleRecord: function(e) {
     e.preventDefault();
-    console.log(this.state.location)
     this.resetData();
     jQuery.ajax({
       type: "POST",

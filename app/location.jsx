@@ -18,9 +18,10 @@ var Location = React.createClass({
   renderStopButton: function() {
     return(
       <div className="location">
-        <p> {this.props.value} </p>
-        <button type='button' className="btn btn-primary btn-lg" onClick={this.props.handleSave}>Save</button>
-        <button type='button' className="btn btn-lg" onClick={this.props.handleCancel}>Cancel</button>
+      <form className="form" onSubmit={this.props.handleStop}>
+        <p>Location: {this.props.value} </p>
+        <input type="submit" value="Stop" />
+        </form>
       </div>
     )
   },
