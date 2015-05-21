@@ -4,6 +4,7 @@ import React from "react";
 import jQuery from "jquery";
 import Chart from './chart.jsx';
 import Location from './location.jsx'
+import File from "./FileSaver.js"
 
 var App = React.createClass({
   getInitialState: function() {
@@ -58,15 +59,23 @@ var App = React.createClass({
     e.preventDefault();
     this.setState({ recording: false,
                   location: null,
-                  isSubmitting: true})
+                  isSubmitting: true});
     // send data back to server
+    var data = JSON.stringify({"weight": this.state.weight});
     jQuery.ajax({
       type: "POST",
-      // url: "http://localhost:"+ this.state.port+"/stop",
-      url: "/stop",
-      data: JSON.stringify({"weight": this.state.weight}),
+      url: "http://localhost:"+ this.state.port+"/stop",
+      // url: "/stop",
+      data: data,
       dataType: 'json'
     });
+
+    var blob = new Blob(this.state.weight, {type: "text/text"});
+
+    File.saveAs(blob, "download.csv");
+    // var uriContent = "data:application/octet-stream," + encodeURIComponent(data);
+
+    // newWindow=window.open(uriContent, 'neuesDokument');
 
     this.resetData();
   },
@@ -78,8 +87,8 @@ var App = React.createClass({
     jQuery.ajax({
       type: "POST",
       data: JSON.stringify({"location": this.state.location}),
-      // url: "http://localhost:" + this.state.port + "/record"
-      url: "/record"
+      url: "http://localhost:" + this.state.port + "/record"
+      // url: "/record"
     })
     this.setState({recording: true,
                   now: new Date()})
