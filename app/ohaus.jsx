@@ -71,7 +71,7 @@ var App = React.createClass({
 
     var blob = new Blob(this.to_csv(this.state.weight), {type: "text/text"});
 
-    File.saveAs(blob, "download.csv");
+    File.saveAs(blob, this.state.location +".csv");
     this.resetData();
   },
 
