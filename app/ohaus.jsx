@@ -61,23 +61,26 @@ var App = React.createClass({
                   location: null,
                   isSubmitting: true});
     // send data back to server
-    var data = JSON.stringify({"weight": this.state.weight});
     jQuery.ajax({
       type: "POST",
       url: "http://localhost:"+ this.state.port+"/stop",
       // url: "/stop",
-      data: data,
+      data: JSON.stringify({"weight": this.state.weight}),
       dataType: 'json'
     });
 
-    var blob = new Blob(this.state.weight, {type: "text/text"});
+    var blob = new Blob(this.to_csv(this.state.weight), {type: "text/text"});
 
     File.saveAs(blob, "download.csv");
-    // var uriContent = "data:application/octet-stream," + encodeURIComponent(data);
-
-    // newWindow=window.open(uriContent, 'neuesDokument');
-
     this.resetData();
+  },
+
+  to_csv: function(data) {
+    var output = ["time, kg\n"]
+    data.forEach(function(d) {
+      output.push(d.time + ","+ d.value + "\n");
+    });
+    return output;
   },
 
   handleRecord: function(e) {
