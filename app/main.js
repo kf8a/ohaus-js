@@ -1,7 +1,6 @@
 'use strict';
 
 import React from "react";
-import Hello from "./component.js";
 import SocketService from "./socket-service.js"
 import App from "./ohaus.jsx"
 
